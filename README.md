@@ -34,3 +34,8 @@ to have clear results and not just guessing, this includes:
  - temperature (hour resolution)
  - wind speed and direction (hour resolution)
  - atmospheric pressure (hour resolution)
+
+### Data source
+Data is being gathered from two sources:
+ - https://dane.imgw.pl/data/dane_pomiarowo_obserwacyjne/dane_meteorologiczne/terminowe/synop/ (meteorological data)
+ - http://monitoring.krakow.pios.gov.pl/dane-pomiarowe/pobierz (PM10 & PM2.5 data)
