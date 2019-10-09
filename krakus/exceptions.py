@@ -4,3 +4,7 @@ class KrakusError(Exception):
 
 class InvalidDateRange(KrakusError):
     pass
+
+
+class InvalidDateFormat(KrakusError):
+    pass

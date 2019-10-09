@@ -1,10 +1,11 @@
 import asyncio
-from datetime import date, timedelta
+from datetime import date as dt
+from datetime import timedelta
 
 import httpx
 
 from .structures import STATION_MAP
-from .exceptions import InvalidDateRange
+from .exceptions import InvalidDateFormat, InvalidDateRange
 from .types import IsoDate, WiosDate
 
 
@@ -15,11 +16,16 @@ class Krakus:
     url = 'http://monitoring.krakow.pios.gov.pl/dane-pomiarowe/pobierz'
     query = '{"measType":"Auto","viewType":"Station","dateRange":"Day","date":"%s","viewTypeEntityId":"%s","channels":[%s]}'
 
-    def _validate_date_range(self, start, end):
+    def _validate_date_range(self, start, end) -> None:
         if start > end:
             raise InvalidDateRange()
 
     def _format_date_wios(self, date: IsoDate) -> WiosDate:
+        try:
+            dt.fromisoformat(date)
+        except ValueError:
+            raise InvalidDateFormat()
+
         date_components = date.split('-')
         return f'{date_components[2]}.{date_components[1]}.{date_components[0]}'
 
@@ -39,8 +45,8 @@ class Krakus:
             return [r.content for r in res]
 
     async def get_range(self, start_range: IsoDate, end_range: IsoDate):
-        start = date.fromisoformat(start_range)
-        end = date.fromisoformat(end_range)
+        start = dt.fromisoformat(start_range)
+        end = d4t.fromisoformat(end_range)
         self._validate_date_range(start, end)
         tasks = []
         while start < end:
