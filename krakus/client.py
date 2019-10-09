@@ -5,7 +5,7 @@ import httpx
 
 from .structures import STATION_MAP
 from .exceptions import InvalidDateRange
-from .types import IsoDate
+from .types import IsoDate, WiosDate
 
 
 class Krakus:
@@ -19,10 +19,16 @@ class Krakus:
         if start > end:
             raise InvalidDateRange()
 
+    def _format_date_wios(self, date: IsoDate) -> WiosDate:
+        date_components = date.split('-')
+        return f'{date_components[2]}.{date_components[1]}.{date_components[0]}'
+
     async def get(self, date: IsoDate) -> list:
+        """
+        Given a date in format YYYY-MM-DD, gets the pollution data for all WIOS stations in Krakow
+        """
         async with httpx.AsyncClient() as client:
-            date_components = date.split('-')
-            new_date = f'{date_components[2]}.{date_components[1]}.{date_components[0]}'
+            new_date = self._format_date_wios(date)
             queries = [
                 self.query % (new_date, station.id, f'{station.pm10_code},{station.pm25_code}') if station.pm25_code else self.query % (
                     new_date, station.id, station.pm10_code)
