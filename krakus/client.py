@@ -13,6 +13,7 @@ class Krakus:
     """
     Get data from http://monitoring.krakow.pios.gov.pl API
     """
+
     url = 'http://monitoring.krakow.pios.gov.pl/dane-pomiarowe/pobierz'
     query = '{"measType":"Auto","viewType":"Station","dateRange":"Day","date":"%s","viewTypeEntityId":"%s","channels":[%s]}'
 
@@ -36,8 +37,9 @@ class Krakus:
         async with httpx.AsyncClient() as client:
             new_date = self._format_date_wios(date)
             queries = [
-                self.query % (new_date, station.id, f'{station.pm10_code},{station.pm25_code}') if station.pm25_code else self.query % (
-                    new_date, station.id, station.pm10_code)
+                self.query % (new_date, station.id, f'{station.pm10_code},{station.pm25_code}')
+                if station.pm25_code
+                else self.query % (new_date, station.id, station.pm10_code)
                 for station in STATION_MAP.values()
             ]
             tasks = [client.post(self.url, data={'query': query}) for query in queries]

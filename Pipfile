@@ -6,6 +6,7 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 ipdb = "*"
+black = "==19.3b0"
 
 [packages]
 httpx = "*"
