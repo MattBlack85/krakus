@@ -49,7 +49,7 @@ class Krakus:
 
     async def get_range(self, start_range: IsoDate, end_range: IsoDate):
         start = dt.fromisoformat(start_range)
-        end = d4t.fromisoformat(end_range)
+        end = dt.fromisoformat(end_range)
         self._validate_date_range(start, end)
         tasks = []
         while start < end:
