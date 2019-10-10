@@ -5,8 +5,9 @@
 
 Krakus
 ============
-Krakus want to be a scientific tool to help o determine whether or not the ban that went live on 2019 September, 1st
+Krakus wants to be a scientific tool to help to determine whether the ban that went live on September 1, 2019, 
 is going to solve the pollution problem that affects Kraków (Cracow) or not.
+
 
 
 ### A bit of history
