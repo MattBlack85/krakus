@@ -1,0 +1,86 @@
+version: 2.1
+
+executors:
+  global-executor:
+    docker:
+      - image: circleci/python:3.7.4
+        environment:
+          PIPENV_VENV_IN_PROJECT: true
+
+    working_directory: ~/repo
+
+jobs:
+  tests:
+    executor: global-executor
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run:
+          name: install dependencies
+          command: make cheeseshop
+
+      - save_cache:
+          paths:
+            - /usr/local/bin
+            - /usr/local/lib/python3.7/site-packages
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run: make run-tests
+
+  isort:
+    executor: global-executor
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run:
+          name: install dependencies
+          command: make cheeseshop
+
+      - save_cache:
+          paths:
+            - /usr/local/bin
+            - /usr/local/lib/python3.7/site-packages
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run: make isort-check
+
+  black:
+    executor: global-executor
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run:
+          name: install dependencies
+          command: make cheeseshop
+
+      - save_cache:
+          paths:
+            - /usr/local/bin
+            - /usr/local/lib/python3.7/site-packages
+          key: v1-dependencies-{{ checksum "Pipfile.lock" }}
+
+      - run: make black-format-check
+
+
+workflows:
+  version: 2
+  standard:
+    jobs:
+      - isort
+      - black
+      - tests
