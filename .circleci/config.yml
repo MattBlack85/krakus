@@ -24,6 +24,10 @@ jobs:
           name: install dependencies
           command: make cheeseshop
 
+      - run:
+          name: install python-coveralls
+          command: pipenv run pip install python-coveralls
+
       - save_cache:
           paths:
             - /usr/local/bin
@@ -36,6 +40,8 @@ jobs:
 
       - store_artifacts:
           path: htmlcov
+
+      - run: pipenv run coveralls
 
   isort:
     executor: global-executor
