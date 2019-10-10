@@ -2,8 +2,10 @@
 	black-format-check \
 	bootstrap \
 	cheeseshop \
+	coverage-html \
 	isort \
 	isort-check \
+	mypy \
 	nuke-venv \
 	run-tests \
 
@@ -29,6 +31,9 @@ isort:
 
 isort-check:
 	@$(PIPENV_RUN) isort krakus/ tests/ --recursive --check-only -tc -q
+
+mypy:
+	@$(PIPENV_RUN) mypy krakus/
 
 nuke-venv:
 	@pipenv --rm;\

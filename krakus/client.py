@@ -1,6 +1,7 @@
 import asyncio
 from datetime import date as dt
 from datetime import timedelta
+from typing import List
 
 import httpx
 
@@ -28,9 +29,9 @@ class Krakus:
             raise InvalidDateFormat()
 
         date_components = date.split('-')
-        return f'{date_components[2]}.{date_components[1]}.{date_components[0]}'
+        return WiosDate(f'{date_components[2]}.{date_components[1]}.{date_components[0]}')
 
-    async def get(self, date: IsoDate) -> list:
+    async def get(self, date: IsoDate) -> List[str]:
         """
         Given a date in format YYYY-MM-DD, gets the pollution data for all WIOS stations in Krakow
         """
@@ -52,7 +53,7 @@ class Krakus:
         self._validate_date_range(start, end)
         tasks = []
         while start < end:
-            tasks.append(self.get(start.isoformat()))
+            tasks.append(self.get(IsoDate(start.isoformat())))
             start = start + timedelta(days=1)
 
         return await asyncio.gather(*tasks)
