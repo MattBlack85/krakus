@@ -8,6 +8,7 @@ pytest = "*"
 ipdb = "*"
 black = "==19.3b0"
 isort = "*"
+pytest-cov = "*"
 
 [packages]
 httpx = "*"
