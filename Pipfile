@@ -7,6 +7,7 @@ verify_ssl = true
 pytest = "*"
 ipdb = "*"
 black = "==19.3b0"
+isort = "*"
 
 [packages]
 httpx = "*"

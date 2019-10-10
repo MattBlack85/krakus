@@ -1,6 +1,5 @@
 import pytest
 
-
 from krakus.exceptions import InvalidDateFormat, InvalidDateRange
 
 

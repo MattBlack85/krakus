@@ -4,8 +4,8 @@ from datetime import timedelta
 
 import httpx
 
-from .structures import STATION_MAP
 from .exceptions import InvalidDateFormat, InvalidDateRange
+from .structures import STATION_MAP
 from .types import IsoDate, WiosDate
 
 
