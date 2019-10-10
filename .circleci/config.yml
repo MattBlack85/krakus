@@ -32,6 +32,11 @@ jobs:
 
       - run: make run-tests
 
+      - run: make coverage-html
+
+      - store_artifacts:
+          path: htmlcov
+
   isort:
     executor: global-executor
     steps:

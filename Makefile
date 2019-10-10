@@ -21,6 +21,9 @@ bootstrap: nuke-venv cheeseshop
 cheeseshop:
 	@pipenv install --dev
 
+coverage-html:
+	@$(PIPENV_RUN) coverage html
+
 isort:
 	@$(PIPENV_RUN) isort krakus/ tests/ --recursive -tc
 
