@@ -4,5 +4,5 @@ from krakus.client import Wios
 
 
 @pytest.fixture
-def krakus():
+def wios():
     return Wios()
