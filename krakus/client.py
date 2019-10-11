@@ -50,7 +50,7 @@ class Wios:
             queries = self._build_query(date)
             tasks = [client.post(self.url, data={'query': query}) for query in queries]
             res = await asyncio.gather(*tasks)
-            return [r.content for r in res]
+            return [r.json() for r in res]
 
     async def get_range(self, start_range: IsoDate, end_range: IsoDate):
         start = dt.fromisoformat(start_range)

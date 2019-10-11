@@ -34,3 +34,12 @@ def test_query_building(wios):
     ]
 
     assert wios._build_query('2019-01-01') == expected
+
+
+@pytest.mark.asyncio
+async def test_get_data_for_single_day(wios, httpx_mock, async_client, mocker):
+    mocker.patch.object(wios, '_build_query', return_value=[b'foo', b'foo', b'foo'])
+    res = await wios.get('2019-01-01')
+    assert len(res) == 3
+    assert async_client.post.call_count == 3
+    wios._build_query.assert_called_once_with('2019-01-01')

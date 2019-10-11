@@ -10,6 +10,9 @@ black = "==19.3b0"
 isort = "*"
 pytest-cov = "*"
 mypy = "*"
+pytest-mock = "*"
+pytest-asyncio = "*"
+asynctest = "*"
 
 [packages]
 httpx = "*"
