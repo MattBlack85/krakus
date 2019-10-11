@@ -10,7 +10,7 @@ from .structures import STATION_MAP
 from .types import IsoDate, WiosDate
 
 
-class Krakus:
+class Wios:
     """
     Get data from http://monitoring.krakow.pios.gov.pl API
     """

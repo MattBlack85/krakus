@@ -1,8 +1,8 @@
 import pytest
 
-from krakus.client import Krakus
+from krakus.client import Wios
 
 
 @pytest.fixture
 def krakus():
-    return Krakus()
+    return Wios()
