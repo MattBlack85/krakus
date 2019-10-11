@@ -1,5 +1,5 @@
 <p align="center">
-<a href="https://coveralls.io/github/MattBlack85/krakus?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/github/MattBlack85/krakus/badge.svg?branch=master"></a>
+<a href="https://codecov.io/gh/MattBlack85/krakus"><img src="https://codecov.io/gh/MattBlack85/krakus/branch/master/graph/badge.svg" /></a>
 <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 </p>
 
