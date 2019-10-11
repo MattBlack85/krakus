@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@1.0.4
+  
 executors:
   global-executor:
     docker:
@@ -24,10 +27,6 @@ jobs:
           name: install dependencies
           command: make cheeseshop
 
-      - run:
-          name: install python-coveralls
-          command: pipenv run pip install python-coveralls
-
       - save_cache:
           paths:
             - /usr/local/bin
@@ -41,7 +40,10 @@ jobs:
       - store_artifacts:
           path: htmlcov
 
-      - run: pipenv run coveralls
+      - run: pipenv run coverage xml
+
+      - codecov/upload:
+          flags: krakus
 
   isort:
     executor: global-executor
