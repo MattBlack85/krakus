@@ -31,18 +31,23 @@ class Wios:
         date_components = date.split('-')
         return WiosDate(f'{date_components[2]}.{date_components[1]}.{date_components[0]}')
 
+    def _build_query(self, date: IsoDate) -> List[str]:
+        new_date = self._format_date_wios(date)
+        queries = []
+        for station in STATION_MAP.values():
+            if station.pm25_code:
+                queries.append(self.query % (new_date, station.id, f'{station.pm10_code},{station.pm25_code}'))
+            else:
+                queries.append(self.query % (new_date, station.id, station.pm10_code))
+
+        return queries
+
     async def get(self, date: IsoDate) -> List[str]:
         """
         Given a date in format YYYY-MM-DD, gets the pollution data for all WIOS stations in Krakow
         """
         async with httpx.AsyncClient() as client:
-            new_date = self._format_date_wios(date)
-            queries = [
-                self.query % (new_date, station.id, f'{station.pm10_code},{station.pm25_code}')
-                if station.pm25_code
-                else self.query % (new_date, station.id, station.pm10_code)
-                for station in STATION_MAP.values()
-            ]
+            queries = self._build_query(date)
             tasks = [client.post(self.url, data={'query': query}) for query in queries]
             res = await asyncio.gather(*tasks)
             return [r.content for r in res]
