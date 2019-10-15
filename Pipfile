@@ -16,6 +16,7 @@ asynctest = "*"
 
 [packages]
 httpx = "*"
+certifi = "*"
 
 [requires]
 python_version = "3.7"
