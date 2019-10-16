@@ -5,9 +5,9 @@ from typing import List
 
 import httpx
 
+from .custom_types import IsoDate, WiosDate
 from .exceptions import InvalidDateFormat, InvalidDateRange
 from .structures import STATION_MAP
-from .types import IsoDate, WiosDate
 
 
 class Wios:
