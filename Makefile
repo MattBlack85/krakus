@@ -43,4 +43,4 @@ nuke-venv:
 	fi
 
 run-tests:
-	@$(PIPENV_RUN) py.test --cov krakus
+	@$(PIPENV_RUN) py.test -s --cov krakus
