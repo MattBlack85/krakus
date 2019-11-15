@@ -2,6 +2,7 @@ from datetime import datetime
 
 import pytest
 
+from krakus.utils.date import convert_ts_to_dt
 from krakus.utils.wios import STATION_REGEX, StationDataInterface
 
 
@@ -26,12 +27,12 @@ def test_series(wios_station_data):
 def test_filter_with_empty_series(wios_station_data):
     wios_station_data['data']['series'] = []
     interface = StationDataInterface(wios_station_data)
-    assert interface._filter_series('pm10') == []
+    assert interface._filter_series('pm10') == {}
 
 
 def test_filter_bad_key(wios_station_data):
     interface = StationDataInterface(wios_station_data)
-    assert interface._filter_series('foo') == []
+    assert interface._filter_series('foo') == {}
 
 
 @pytest.mark.parametrize('attr', ['pm10_data', 'pm25_data'])
@@ -39,14 +40,13 @@ def test_pm_data(attr, wios_station_data):
     interface = StationDataInterface(wios_station_data)
     # for some reasons there are 26 measurements for one single day
     assert len(getattr(interface, attr)) == 26
-    for element in getattr(interface, attr):
-        assert isinstance(element, list)
+    for time, measurement in getattr(interface, attr).items():
         # First element is a str represeting a unix timestamp,
         # this will make sure we can convert it
-        datetime.fromtimestamp(int(element[0]))
+        convert_ts_to_dt(time)
         # The second element is a str representing a float, this
         # will make sure we are dealing with such a thing.
-        float(element[1])
+        float(measurement)
 
 
 @pytest.mark.parametrize(
